@@ -1,9 +1,5 @@
 from data_fetcher import fetch_data
 
-URL = 'https://api.api-ninjas.com/v1/animals'
-API_KEY = 'FK7SfqcRurie9/3b0BD0zw==eBitGH8yUszBhhSn'
-
-
 def serialize_animal(animal_obj):
     output = ''
     output += '<li class="cards__item">'
@@ -36,10 +32,6 @@ def main():
     with open('animals.html', 'w') as file:
         file.write(formatted_data)
     print('Website was successfully generated to the file animals.html.')
-
-
-
-
 
 
 if __name__ == '__main__':
