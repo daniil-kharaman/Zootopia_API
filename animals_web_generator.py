@@ -1,4 +1,4 @@
-import requests
+from data_fetcher import fetch_data
 
 URL = 'https://api.api-ninjas.com/v1/animals'
 API_KEY = 'FK7SfqcRurie9/3b0BD0zw==eBitGH8yUszBhhSn'
@@ -20,21 +20,9 @@ def serialize_animal(animal_obj):
     return output
 
 
-def get_animals(url, key, name):
-    params = {
-        'name': name
-    }
-    headers = {
-        'X-Api-Key': key
-    }
-    response = requests.get(url, params=params, headers=headers)
-    parsed_response = response.json()
-    return parsed_response
-
-
 def main():
     name = input('Enter a name of an animal: ').strip()
-    animals = get_animals(URL, API_KEY, name)
+    animals = fetch_data(name)
     result = ''
     for animal in animals:
         result += serialize_animal(animal)
