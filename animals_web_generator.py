@@ -1,4 +1,8 @@
-import json
+import requests
+
+URL = 'https://api.api-ninjas.com/v1/animals'
+API_KEY = 'FK7SfqcRurie9/3b0BD0zw==eBitGH8yUszBhhSn'
+
 
 def serialize_animal(animal_obj):
     output = ''
@@ -16,21 +20,29 @@ def serialize_animal(animal_obj):
     return output
 
 
-with open('animals_data.json', 'r') as file:
-    animals = json.loads(file.read())
+def get_animals(url, key):
+    params = {
+        'name': 'fox'
+    }
+    headers = {
+        'X-Api-Key': key
+    }
+    response = requests.get(url, params=params, headers=headers)
+    parsed_response = response.json()
+    return parsed_response
 
 
-result = ''
-for animal in animals:
-    result += serialize_animal(animal)
+def main():
+    animals = get_animals(URL, API_KEY)
+    result = ''
+    for animal in animals:
+        result += serialize_animal(animal)
+    with open('animals_template.html', 'r') as file:
+        data = file.read()
+    formatted_data = data.replace('__REPLACE_ANIMALS_INFO__', result)
+    with open('animals.html', 'w') as file:
+        file.write(formatted_data)
 
-print(result)
 
-
-with open('animals_template.html', 'r') as file:
-    data = file.read()
-
-
-formatted_data = data.replace('__REPLACE_ANIMALS_INFO__', result)
-with open('animals.html', 'w') as file:
-    file.write(formatted_data)
+if __name__ == '__main__':
+    main()
