@@ -20,9 +20,9 @@ def serialize_animal(animal_obj):
     return output
 
 
-def get_animals(url, key):
+def get_animals(url, key, name):
     params = {
-        'name': 'fox'
+        'name': name
     }
     headers = {
         'X-Api-Key': key
@@ -33,15 +33,25 @@ def get_animals(url, key):
 
 
 def main():
-    animals = get_animals(URL, API_KEY)
+    name = input('Enter a name of an animal: ').strip()
+    animals = get_animals(URL, API_KEY, name)
     result = ''
     for animal in animals:
         result += serialize_animal(animal)
     with open('animals_template.html', 'r') as file:
         data = file.read()
     formatted_data = data.replace('__REPLACE_ANIMALS_INFO__', result)
+    if len(animals) == 0:
+        '<h1>My Animal Repository</h1>'
+        formatted_data = formatted_data.replace('<h1>My Animal Repository</h1>',
+                                                f"<h1>The animal {name} doesn't exist</h1>")
     with open('animals.html', 'w') as file:
         file.write(formatted_data)
+    print('Website was successfully generated to the file animals.html.')
+
+
+
+
 
 
 if __name__ == '__main__':
