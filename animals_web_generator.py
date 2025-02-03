@@ -1,6 +1,7 @@
 from data_fetcher import fetch_data
 
 def serialize_animal(animal_obj):
+    '''Formats information about the animal fetched from the endpoint into html type'''
     output = ''
     output += '<li class="cards__item">'
     output += f'<div class="card__title">{animal_obj['name'].capitalize()}</div>'
